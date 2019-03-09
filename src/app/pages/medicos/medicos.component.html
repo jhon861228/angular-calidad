@@ -1,0 +1,50 @@
+<app-buscador-component [cargando]="cargando" (digitaLetra)="buscarMedicos( $event )"></app-buscador-component>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="text-right">
+                            <button type="button" class="btn btn-rounded btn-primary" [routerLink]="['/medico','nuevo']" routerLinkActive="router-link-active"><i class="fa fa-plus"></i> Agregar</button>
+                        </div>
+                    </div>
+
+                </div>
+
+                <h3> Hospitales registrados ( <small>{{ totalRegistros }}</small> ) </h3>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <td>Imagen</td>
+                            <td>Nombre</td>
+                            <td>Hospital</td>
+                            <td></td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let medico of medicos">
+                            <td class="text-center" style="width: 70px">
+                                <img [src]="medico.img | imagen:'medico'" class="w40" (click)="mostrarModal(medico._id)" />
+                            </td>
+                            <td>
+                                {{ medico.nombre }}
+                            </td>
+                            <td>
+                                {{ medico.hospital.nombre }}
+                            </td>
+                            <td>
+                                <button [routerLink]="['/medico', medico._id ]" routerLinkActive="router-link-active" class="btn btn-primary"> <i class="fa fa-edit"></i> </button>
+                                <button (click)="borrarMedico( medico )" class="btn btn-danger"> <i class="fa fa-trash-o"></i> </button>
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+                <button (click)="cambiarDesde(-5)" class="btn btn-secondary">Anteriores</button>
+                <button (click)="cambiarDesde(5)" class="btn btn-secondary">Siguientes</button>
+            </div>
+        </div>
+    </div>
+</div>
