@@ -5,10 +5,7 @@ import { AccountSettingsComponent } from './account-settings/account-settings.co
 import { LoginGuardGuard } from '../services/service.index';
 import { ProfileComponent } from './profile/profile.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
-import { MedicoComponent } from './medicos/medico.component';
-import { MedicosComponent } from './medicos/medicos.component';
 import { BusquedaComponent } from './busqueda/busqueda.component';
-import { BoletasComponent } from './boletas/boletas.component';
 
 const pagesRoutes: Routes = [
     {
@@ -23,9 +20,7 @@ const pagesRoutes: Routes = [
             {path: 'busqueda/:term', component: BusquedaComponent, data: { titulo: 'Perfil' }},
             // Mantenimientos
             {path: 'usuarios', component: UsuariosComponent, data: { titulo: 'Usuarios' }},
-            {path: 'medicos', component: MedicosComponent, data: { titulo: 'Medicos' }},
-            {path: 'medico/:id', component: MedicoComponent, data: { titulo: 'Medico' }},
-            {path: 'boletas', component: BoletasComponent, data: { titulo: 'Boletas' }},
+            {path: 'usuarios', component: UsuariosComponent, data: { titulo: 'Usuarios' }},
             {path: '', redirectTo: 'dashboard', pathMatch: 'full'}
         ]
     }

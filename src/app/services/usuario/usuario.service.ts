@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Usuario } from '../../models/usuario.model';
 import { HttpClient } from '@angular/common/http';
-import { URL_SERVICIO } from '../../config/config';
+import { URL_SERVICIO_NODE, URL_SERVICIO_JAVA } from '../../config/config';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
+import { UsuarioJava } from 'src/app/models/usuario.java';
 
 
 @Injectable({
@@ -29,15 +30,23 @@ export class UsuarioService {
       localStorage.removeItem( 'email' );
     }
 
-    const url = URL_SERVICIO + '/login';
+    // const url = URL_SERVICIO_JAVA + '/login';
+    this.guardarStorage( '1', 'tywe5623t2y323t2y3ty2t52',
+    {nombre: 'Jhon Diaz',
+    email: 'admin@gmail.com',
+    password: '',
+    img: 'https://cdn4.iconfinder.com/data/icons/people-avatars-12/24/people_avatar_head_wolverine_logan_xman_marvel-512.png'
+  }
+    );
 
-    return this.http.post( url, usuario )
+    this.router.navigate(['/dashboard']);
+    /*return this.http.post( url, usuario )
     .subscribe( (resp: any) => {
 
         this.guardarStorage( resp.id, resp.token, resp.usuario );
 
         this.router.navigate(['/dashboard']);
-      });
+      });*/
   }
 
   logout() {
@@ -63,23 +72,6 @@ export class UsuarioService {
     }
   }
 
-  crearUsuario( usuario: Usuario ) {
-    const url = URL_SERVICIO + '/usuario';
-    return this.http.post( url, usuario );
-  }
-
-  actualizarUsuario( usuario: Usuario ) {
-    const url = URL_SERVICIO + '/usuario/' + usuario._id + '?token=' + this.token;
-    console.log( usuario );
-    this.http.put( url, usuario ).subscribe( ( resp: any ) => {
-      if ( this.usuario._id === usuario._id ) {
-        this.usuario = resp.usuario;
-        localStorage.setItem( 'usuario', JSON.stringify( resp.usuario) );
-      }
-      Swal.fire( 'Usuario Actualizado', usuario.nombre, 'success' );
-    });
-  }
-
   guardarStorage( id: string, token: string, usuario: Usuario ) {
 
     localStorage.setItem('id', id );
@@ -91,19 +83,30 @@ export class UsuarioService {
     console.log( 'Storage actualizado' );
   }
 
+  crearUsuario( usuario: UsuarioJava ) {
+    console.log('Creando usuario');
+    const url = URL_SERVICIO_JAVA + '/user-api/create';
+    return this.http.post( url, usuario);
+  }
 
-  cargarUsuarios(desde: number = 0) {
-    const url = URL_SERVICIO + '/usuario?desde=' + desde;
+  actualizarUsuario( usuario: UsuarioJava ) {
+    const url = URL_SERVICIO_JAVA + '/user-api/update';
+    console.log( usuario );
+    return this.http.put( url, usuario );
+  }
+
+  cargarUsuarios() {
+    const url = URL_SERVICIO_JAVA + '/user-api/findAll';
     return this.http.get( url );
   }
 
   busquedaUsuarios(term: string) {
-    const url = URL_SERVICIO + '/busqueda/coleccion/usuarios/' + term;
+    const url = URL_SERVICIO_JAVA + '/user-api/findByFirstOrLastName/' + term;
     return this.http.get( url );
   }
 
-  borrarUsuario(id: string) {
-    const url = URL_SERVICIO + '/usuario/' + id + '?token=' + this.token;
+  borrarUsuario(id: number) {
+    const url = URL_SERVICIO_JAVA + '/user-api/deleteById?id=' + id;
     return this.http.delete( url );
   }
 }

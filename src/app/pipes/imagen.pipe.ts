@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { URL_SERVICIO } from '../config/config';
+import { URL_SERVICIO_NODE } from '../config/config';
 
 @Pipe({
   name: 'imagen'
@@ -7,7 +7,7 @@ import { URL_SERVICIO } from '../config/config';
 export class ImagenPipe implements PipeTransform {
 
   transform(img: string, tipo: string = 'usuario'): any {
-    const url = URL_SERVICIO + '/img/';
+    const url = URL_SERVICIO_NODE + '/img/';
     if ( !img ) {
       return url + '/usuarios/xxx';
     }
@@ -16,8 +16,7 @@ export class ImagenPipe implements PipeTransform {
       return img;
     }
     console.log( url );
-    switch( tipo ) {
-      
+    switch ( tipo ) {
       case 'usuario' :
         return url + '/usuarios/' + img;
       case 'medico' :
@@ -26,7 +25,7 @@ export class ImagenPipe implements PipeTransform {
       case 'hospital' :
         return url + '/hospitales/' + img;
       default:
-        return url + '/usuarios/xxx'; 
+        return url + '/usuarios/xxx';
 
     }
 

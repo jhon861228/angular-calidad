@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { URL_SERVICIO } from '../../config/config';
+import { URL_SERVICIO_NODE } from '../../config/config';
 import { Usuario } from '../../models/usuario.model';
 import { Medico } from '../../models/medico.model';
 import { Hospital } from '../../models/hospital.model';
@@ -30,7 +30,7 @@ export class BusquedaComponent implements OnInit {
   }
 
   buscar( term: string ) {
-    const url = URL_SERVICIO + '/busqueda/todo/' + term;
+    const url = URL_SERVICIO_NODE + '/busqueda/todo/' + term;
     this.http.get( url )
             .subscribe( (resp: any) => {
               console.log( resp );
